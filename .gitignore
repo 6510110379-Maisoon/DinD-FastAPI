@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env/
+.env.*
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+*.cover
+*.py,cover
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Jenkins workspace
+workspace/
+.jenkins/
+
+# Docker
+*.dockerfile
+docker-compose.override.yml
