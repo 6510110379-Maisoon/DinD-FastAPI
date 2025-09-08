@@ -6,7 +6,6 @@ from app.main import app
 
 client = TestClient(app)
 
-# Test เดิมยังคงเหมือนเดิม → pipeline ผ่าน
 def test_root():
     response = client.get("/")
     assert response.status_code == 200
@@ -26,10 +25,7 @@ def test_reverse_string():
     assert response.status_code == 200
     assert response.json()["reversed"] == "ebuQranoS"
 
-# Test สำหรับ code smell (ไม่ fail pipeline)
-def test_code_smell():
-    response = client.get("/code_smell")
+def test_code_smell_route():
+    response = client.get("/smell")
     assert response.status_code == 200
-    # แปลงข้อความเป็น lowercase ก่อนตรวจ
-    assert "fastapi" in response.json()["message"].lower()
-
+    assert "This is redundant" in response.json()["message"]
