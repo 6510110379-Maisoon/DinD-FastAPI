@@ -10,37 +10,31 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# ฟังก์ชัน root ทำงานยาวขึ้นโดยไม่จำเป็น (Code Smell)
+# root เดิม ไม่เปลี่ยน → test_root() ผ่าน
 @app.get("/")
 def root():
-    messages = ["Hello", "from", "FastAPI", "with", "Jenkins", "&", "SonarQube!"]
-    result = []
-    for m in messages:  # loop ซ้ำ
-        result.append(m.upper())
-    for m in messages:  # loop ซ้ำอีกครั้ง (duplicated code)
-        result.append(m.lower())
-    return {"message": " ".join(result)}
+    return {"message": "Hello from FastAPI with Jenkins & SonarQube!"}
 
-
-# ฟังก์ชัน get_average เพิ่ม logic ซ้ำ
 @app.get("/average")
-def get_average(numbers):  # ลบ type hints → code smell
-    if not numbers:
-        raise HTTPException(status_code=400, detail="No numbers provided")
-    
-    # logic ซ้ำ
+def get_average(numbers: List[float] = Query(...)):
     try:
-        avg1 = calculate_average(numbers)
-        avg2 = calculate_average(numbers)
-        return {"average": avg1 + avg2}  # ทำซ้ำ + ผลรวมที่ไม่จำเป็น
+        result = calculate_average(numbers)
+        return {"average": result}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-
-# ฟังก์ชัน get_reverse เพิ่ม code smell
 @app.get("/reverse")
-def get_reverse(text):
-    # ซ้ำ logic
-    reversed_text1 = reverse_string(text)
-    reversed_text2 = reverse_string(text)
-    return {"reversed": reversed_text1 + reversed_text2}  # concatenate ซ้ำ
+def get_reverse(text: str = Query(...)):
+    result = reverse_string(text)
+    return {"reversed": result}
+
+# endpoint สำหรับ code smell
+@app.get("/code_smell")
+def code_smell():
+    items = ["Hello", "from", "FastAPI", "with", "Jenkins", "&", "SonarQube!"]
+    result = []
+    for i in items:
+        result.append(i.upper())
+    for i in items:  # loop ซ้ำ → code smell
+        result.append(i.lower())
+    return {"message": " ".join(result)}
