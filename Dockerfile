@@ -1,3 +1,5 @@
+# Dockerfile
+
 FROM eclipse-temurin:17-jdk
 
 # ติดตั้ง Python, venv
@@ -24,7 +26,7 @@ COPY . .
 ENV PATH="/app/venv/bin:$PATH"
 
 # เปิด port ของ FastAPI
-EXPOSE 8000
+EXPOSE 8090
 
 # สั่งให้รัน uvicorn เป็น process หลักของ container
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8090"]
