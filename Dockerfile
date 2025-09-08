@@ -1,11 +1,22 @@
-FROM python:3.11-slim
+FROM eclipse-temurin:17-jdk
 
-# ติดตั้ง Java
-RUN apt-get update && apt-get install -y openjdk-17-jdk && rm -rf /var/lib/apt/lists/*
+# ติดตั้ง Python และ venv
+RUN apt-get update && apt-get install -y python3 python3-venv python3-pip && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
 
+# สร้าง virtual environment
+RUN python3 -m venv venv
+
+# คัดลอกไฟล์ requirements
+COPY requirements.txt .
+
+# ติดตั้ง dependencies ใน venv
+RUN ./venv/bin/pip install --upgrade pip \
+    && ./venv/bin/pip install -r requirements.txt
+
+# คัดลอก source code
 COPY . .
+
+# ใช้ venv python เป็นค่า default
+ENV PATH="/app/venv/bin:$PATH"
