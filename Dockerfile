@@ -1,8 +1,8 @@
 FROM eclipse-temurin:17-jdk
 
-# ติดตั้ง Python, venv และ Docker CLI
+# ติดตั้ง Python, venv
 RUN apt-get update && \
-    apt-get install -y python3 python3-venv python3-pip docker.io && \
+    apt-get install -y python3 python3-venv python3-pip && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -22,3 +22,9 @@ COPY . .
 
 # ใช้ venv python เป็นค่า default
 ENV PATH="/app/venv/bin:$PATH"
+
+# เปิด port ของ FastAPI
+EXPOSE 8000
+
+# สั่งให้รัน uvicorn เป็น process หลักของ container
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
