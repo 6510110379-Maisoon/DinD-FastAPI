@@ -1,7 +1,9 @@
 FROM eclipse-temurin:17-jdk
 
-# ติดตั้ง Python และ venv
-RUN apt-get update && apt-get install -y python3 python3-venv python3-pip && rm -rf /var/lib/apt/lists/*
+# ติดตั้ง Python, venv และ Docker CLI
+RUN apt-get update && \
+    apt-get install -y python3 python3-venv python3-pip docker.io && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
