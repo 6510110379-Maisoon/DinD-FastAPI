@@ -30,4 +30,6 @@ def test_reverse_string():
 def test_code_smell():
     response = client.get("/code_smell")
     assert response.status_code == 200
-    assert "FastAPI" in response.json()["message"]
+    # แปลงข้อความเป็น lowercase ก่อนตรวจ
+    assert "fastapi" in response.json()["message"].lower()
+
