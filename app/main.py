@@ -29,20 +29,3 @@ def get_average(numbers: List[float] = Query(..., description="List ของต
 def get_reverse(text: str = Query(..., description="ข้อความที่ต้องการกลับ")):
     result = reverse_string(text)
     return {"reversed": result}
-
-
-# 🔹 เพิ่ม code smell
-@app.get("/smell")
-def code_smell_example():
-    unused_var = 123  # ไม่ได้ใช้ → code smell
-    redundant = "This is redundant"
-    print("This is unnecessary log")  # logging แบบไม่เหมาะสม
-    repeated_code = redundant + redundant + redundant  # duplication
-    return {"message": repeated_code}
-
-# 🔹 function ซ้ำซ้อน (อีก code smell)
-def duplicated_function(x):
-    return x * 2
-
-def duplicated_function_copy(x):
-    return x * 2  # duplicated code

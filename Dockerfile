@@ -25,7 +25,7 @@ COPY . .
 ENV PATH="/app/venv/bin:$PATH"
 
 # เปิด port ของ FastAPI
-EXPOSE 8090
+EXPOSE 8000
 
 # สั่งให้รัน uvicorn เป็น process หลักของ container
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8090"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
